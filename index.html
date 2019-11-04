@@ -2,13 +2,13 @@
 <head>
     <meta charset="utf-8">
     <title>jsQR Demo</title>
-    <script src="/jsQR.js"></script>
+    <script src="./jsQR.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
     <style>
         body {
             font-family: 'Ropa Sans', sans-serif;
             color: #333;
-            max-width: 640px;
+            /*max-width: 640px;*/
             margin: 0 auto;
             position: relative;
         }
@@ -53,7 +53,7 @@
     </style>
 </head>
 <body>
-<h1>jsQR2 Demo</h1>
+<h1>jsQR3 Demo</h1>
 <a id="githubLink" href="https://github.com/cozmo/jsQR">View documentation on Github</a>
 <p>Pure JavaScript QR code decoding library.</p>
 <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
@@ -82,9 +82,8 @@
 
     // Use facingMode: environment to attemt to get the front camera on phones
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-        alert('ok');
         video.srcObject = stream;
-        // video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+        video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
         video.play();
         requestAnimationFrame(tick);
     }).catch(function (error) {
