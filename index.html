@@ -53,9 +53,7 @@
     </style>
 </head>
 <body>
-<h1>jsQR3 Demo</h1>
-<a id="githubLink" href="https://github.com/cozmo/jsQR">View documentation on Github</a>
-<p>Pure JavaScript QR code decoding library.</p>
+<h1>jsQR4 Demo</h1>
 <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
 <canvas id="canvas" hidden></canvas>
 <div id="output" hidden>
@@ -112,6 +110,8 @@
                 outputMessage.hidden = true;
                 outputData.parentElement.hidden = false;
                 outputData.innerText = code.data;
+                alert(code.data);
+                return;
             } else {
                 outputMessage.hidden = false;
                 outputData.parentElement.hidden = true;
