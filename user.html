@@ -41,7 +41,7 @@
 
 
     function getUser() {
-        $.getJSON('/api/user', function (user) {
+        $.getJSON('/api/user/', function (user) {
             $("#userId").html(user.id);
             $("#userName").html(user.name);
             $("#userEmail").html(user.email);
@@ -53,7 +53,7 @@
 
     function getTickets(id) {
         $('#tickets tr').not(':first').remove();
-        $.getJSON(`/api/user/${id}/tickets`, function(tickets) {
+        $.getJSON(`/api/user/${id}/tickets/`, function(tickets) {
             let html = '';
             tickets.forEach(ticket => {
                 html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.ticketType.name}</td></tr>`;
@@ -64,7 +64,7 @@
 
     function getVehicles() {
         $('#vehicles tr').not(':first').remove();
-        $.getJSON(`/api/vehicles`, function(vehicles) {
+        $.getJSON(`/api/vehicles/`, function(vehicles) {
             let html = '';
             vehicles.forEach(vehicle => {
                 html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td></tr>`;

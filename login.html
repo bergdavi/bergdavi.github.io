@@ -18,7 +18,7 @@
 
     <script>
         function sendLogin() {
-            $.post('/api/auth/login', {email: $('#email').val(), password: $('#password').val()}, function (user) {
+            $.post('/api/auth/login/', {email: $('#email').val(), password: $('#password').val()}, function (user) {
                 window.location.href='user'
             });
         }
