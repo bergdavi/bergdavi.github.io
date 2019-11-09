@@ -89,8 +89,10 @@
     });
 
     function validateTicket(id) {
-        $.post('/api/tickets/validate/', {vehicleId: id}, function (result) {
-            alert(result)
+        $.post('/api/tickets/validate/', {vehicleId: id}).then(function (result) {
+            alert(result);
+        }).catch(function(error) {
+            alert(error);
         });
     }
 
