@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    USER:
+    <div id="userId">ID</div>
+    <div id="userName">NAME</div>
+    <div id="userEmail">EMAIL</div>
+    <div id="userIdCard">IDCARD</div>
+    <div id="userType">TYPE</div>
+    <hr/>
+    TICKETS:
+    <table id="tickets" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Valid From</th>
+            <th>Valid Until</th>
+            <th>Type</th>
+        </tr>
+    </table>
+    <hr/>
+    VEHICLES:
+    <table id="vehicles" border="1">
+        <tr>
+            <th>ID</th>
+            <th>VALIDATE ID</th>
+            <th>TYPE</th>
+            <th>LICENCE PLATE</th>
+        </tr>
+    </table>
+</div>
+
+<script>
+    getUser();
+    getVehicles();
+
+
+    function getUser() {
+        $.getJSON('/api/user', function (user) {
+            $("#userId").html(user.id);
+            $("#userName").html(user.name);
+            $("#userEmail").html(user.email);
+            $("#userIdCard").html(user.idCard);
+            $("#userType").html(user.type);
+            getTickets(user.id);
+        });
+    }
+
+    function getTickets(id) {
+        $('#tickets tr').not(':first').remove();
+        $.getJSON(`/api/user/${id}/tickets`, function(tickets) {
+            let html = '';
+            tickets.forEach(ticket => {
+                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.ticketType.name}</td></tr>`;
+            });
+            $('#tickets tr').first().after(html);
+        });
+    }
+
+    function getVehicles() {
+        $('#vehicles tr').not(':first').remove();
+        $.getJSON(`/api/vehicles`, function(vehicles) {
+            let html = '';
+            vehicles.forEach(vehicle => {
+                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td></tr>`;
+            });
+            $('#vehicles tr').first().after(html);
+        });
+    }
+</script>
+</body>
+</html>

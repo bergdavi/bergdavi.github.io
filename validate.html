@@ -88,6 +88,12 @@
         console.log(error);
     });
 
+    function validateTicket(id) {
+        $.post('/api/tickets/validate', {vehicleId: id}, function (result) {
+            alert(result)
+        });
+    }
+
     function tick() {
         loadingMessage.innerText = "⌛ Loading video..."
         if (video.readyState === video.HAVE_ENOUGH_DATA) {
@@ -111,10 +117,10 @@
                 outputData.parentElement.hidden = false;
                 outputData.innerText = code.data;
 
-                alert(code.data);
                 video.srcObject.getTracks().forEach(function(track) {
                     track.stop();
                 });
+                validateTicket(code.data);
                 return;
             } else {
                 outputMessage.hidden = false;
