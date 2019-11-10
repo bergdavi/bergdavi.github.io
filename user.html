@@ -6,23 +6,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
-<div>
-    <div id="adminControls" hidden>
+<div id="qr" hidden>
+    <div id="qrtext"></div>
+    <div id="qrcode"></div>
+</div>
+<div id="details">
+    <div id="adminControls" class="admin" hidden>
         <button onclick="window.location.href='inspect'">Inspect</button>
     </div>
-    <div id="userControls" hidden>
+    <div id="userControls" class="admin" hidden>
         <button onclick="window.location.href='validate'">Validate</button>
     </div>
     <div>
         USER:
+        <button onclick="showQR($('#userId').html(), $('#userName').html())">Show QR</button>
         <div id="userId">ID</div>
         <div id="userName">NAME</div>
         <div id="userEmail">EMAIL</div>
         <div id="userIdCard">IDCARD</div>
         <div id="userType">TYPE</div>
     </div>
-    <hr/>
     <div>
+        <hr/>
         TICKETS:
         <table id="tickets" border="1">
             <tr>
@@ -30,11 +35,12 @@
                 <th>Valid From</th>
                 <th>Valid Until</th>
                 <th>Type</th>
+                <th>QR</th>
             </tr>
         </table>
     </div>
-    <hr/>
-    <div>
+    <div class="admin">
+        <hr/>
         VEHICLES:
         <table id="vehicles" border="1">
             <tr>
@@ -42,6 +48,7 @@
                 <th>VALIDATE ID</th>
                 <th>TYPE</th>
                 <th>LICENCE PLATE</th>
+                <th>QR</th>
             </tr>
         </table>
     </div>
@@ -51,6 +58,17 @@
     getUser();
     getVehicles();
 
+    function showQR(qrcode, title) {
+        $('#details').hide();
+        $('#qr').show();
+        $('#qrtext').html(title);
+        new QRCode(document.getElementById('qrcode'), qrcode);
+    }
+
+    function hideQR() {
+        $('#details').show();
+        $('#qr').hide();
+    }
 
     function getUser() {
         $.getJSON('/api/user/', function (user) {
@@ -60,9 +78,9 @@
             $('#userIdCard').html(user.idCard);
             $('#userType').html(user.type);
             if(user.type === 'user') {
-                $('#userControls').show();
+                $('.user').show();
             } else {
-                $('#adminControls').show();
+                $('.admin').show();
             }
             getTickets(user.id);
         });
@@ -73,7 +91,7 @@
         $.getJSON(`/api/user/${id}/tickets/`, function(tickets) {
             let html = '';
             tickets.forEach(ticket => {
-                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.ticketType.name}</td></tr>`;
+                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.ticketType.name}</td><td><button onclick="showQR(${ticket.id}, ${ticket.ticketType.name})">Show QR</button></td></tr>`;
             });
             $('#tickets tr').first().after(html);
         });
@@ -84,7 +102,7 @@
         $.getJSON(`/api/vehicles/`, function(vehicles) {
             let html = '';
             vehicles.forEach(vehicle => {
-                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td></tr>`;
+                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="showQR(${vehicle.id}, ${vehicle.licencePlate})">Show QR</button></td></tr>`;
             });
             $('#vehicles tr').first().after(html);
         });

@@ -6,6 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
+        body{
+            overflow: hidden;
+            position: absolute;
+        }
         #canvas {
             width: 100%;
             height: 100%;
@@ -46,7 +50,6 @@
     });
 
     function inspectTicket(id) {
-        alert(id);
         $.post('/api/tickets/inspect/', {id: id}).then(function (result) {
             console.log(result);
             $('#canvas').hide();
