@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<div id="canvasDiv" hidden>
+<div id="canvasDiv">
     <canvas id="canvasText"></canvas>
     <canvas id="canvas"></canvas>
 </div>
@@ -52,7 +52,7 @@
     function inspectTicket(id) {
         $.post('/api/tickets/inspect/', {vehicleId: vehicleId, id: id}).then(function (result) {
             console.log(result);
-            $('#canvas').hide();
+            $('#canvasDiv').hide();
             let outputDiv = $('#output');
             outputDiv.show();
             outputDiv.html(result);
@@ -91,7 +91,8 @@
                     inspectTicket(code.data);
                     return;
                 }
-                vehicleId = code;
+                vehicleId = code.data;
+                $('#canvasText').html(code.data);
                 alert(`Inspecting on vehicle with id ${vehicleId}`);
             }
         }
