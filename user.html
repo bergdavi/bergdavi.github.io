@@ -2,37 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>User</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <div>
-    USER:
-    <div id="userId">ID</div>
-    <div id="userName">NAME</div>
-    <div id="userEmail">EMAIL</div>
-    <div id="userIdCard">IDCARD</div>
-    <div id="userType">TYPE</div>
+    <div id="adminControls" hidden>
+        <button onclick="window.location.href='inspect'">Inspect</button>
+    </div>
+    <div id="userControls" hidden>
+        <button onclick="window.location.href='validate'">Validate</button>
+    </div>
+    <div>
+        USER:
+        <div id="userId">ID</div>
+        <div id="userName">NAME</div>
+        <div id="userEmail">EMAIL</div>
+        <div id="userIdCard">IDCARD</div>
+        <div id="userType">TYPE</div>
+    </div>
     <hr/>
-    TICKETS:
-    <table id="tickets" border="1">
-        <tr>
-            <th>ID</th>
-            <th>Valid From</th>
-            <th>Valid Until</th>
-            <th>Type</th>
-        </tr>
-    </table>
+    <div>
+        TICKETS:
+        <table id="tickets" border="1">
+            <tr>
+                <th>ID</th>
+                <th>Valid From</th>
+                <th>Valid Until</th>
+                <th>Type</th>
+            </tr>
+        </table>
+    </div>
     <hr/>
-    VEHICLES:
-    <table id="vehicles" border="1">
-        <tr>
-            <th>ID</th>
-            <th>VALIDATE ID</th>
-            <th>TYPE</th>
-            <th>LICENCE PLATE</th>
-        </tr>
-    </table>
+    <div>
+        VEHICLES:
+        <table id="vehicles" border="1">
+            <tr>
+                <th>ID</th>
+                <th>VALIDATE ID</th>
+                <th>TYPE</th>
+                <th>LICENCE PLATE</th>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <script>
@@ -42,11 +54,16 @@
 
     function getUser() {
         $.getJSON('/api/user/', function (user) {
-            $("#userId").html(user.id);
-            $("#userName").html(user.name);
-            $("#userEmail").html(user.email);
-            $("#userIdCard").html(user.idCard);
-            $("#userType").html(user.type);
+            $('#userId').html(user.id);
+            $('#userName').html(user.name);
+            $('#userEmail').html(user.email);
+            $('#userIdCard').html(user.idCard);
+            $('#userType').html(user.type);
+            if(user.type === 'user') {
+                $('#userControls').show();
+            } else {
+                $('#adminControls').show();
+            }
             getTickets(user.id);
         });
     }

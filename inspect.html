@@ -45,9 +45,9 @@
         console.log(error);
     });
 
-    function validateTicket(id) {
+    function inspectTicket(id) {
         alert(id);
-        $.post('/api/tickets/validate/', {vehicleId: id}).then(function (result) {
+        $.post('/api/tickets/inspect/', {id: id}).then(function (result) {
             console.log(result);
             $('#canvas').hide();
             let outputDiv = $('#output');
@@ -84,7 +84,7 @@
                 video.srcObject.getTracks().forEach(function(track) {
                     track.stop();
                 });
-                validateTicket(code.data);
+                inspectTicket(code.data);
                 return;
             }
         }
