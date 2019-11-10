@@ -93,7 +93,7 @@
         $.getJSON(`/api/user/${id}/tickets/`, function(tickets) {
             let html = '';
             tickets.forEach(ticket => {
-                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.ticketType.name}</td><td><button onclick="showQR(${ticket.id}, ${ticket.ticketType.name})">Show QR</button></td></tr>`;
+                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.ticketType.name}</td><td><button onclick="showQR('${ticket.id}', '${ticket.ticketType.name}')">Show QR</button></td></tr>`;
             });
             $('#tickets tr').first().after(html);
         });
@@ -104,7 +104,7 @@
         $.getJSON(`/api/vehicles/`, function(vehicles) {
             let html = '';
             vehicles.forEach(vehicle => {
-                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="showQR(${vehicle.id}, ${vehicle.licencePlate})">Show QR</button></td></tr>`;
+                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="showQR('${vehicle.id}', '${vehicle.licencePlate}')">Show QR</button></td></tr>`;
             });
             $('#vehicles tr').first().after(html);
         });
