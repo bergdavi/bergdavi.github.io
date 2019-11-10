@@ -51,7 +51,7 @@
             $('#canvas').hide();
             let outputDiv = $('#output');
             outputDiv.show();
-            outputDiv.html(result);
+            outputDiv.html(JSON.stringify(result));
             if(result.status === 'validated') {
                 outputDiv.css('background-color', 'green');
             } else {
