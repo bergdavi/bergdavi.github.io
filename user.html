@@ -43,6 +43,19 @@ user-scalable=no">
             </tr>
         </table>
     </div>
+    <div>
+        <hr/>
+        TICKET TYPES:
+        <table id="ticketTypes" border="1">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>TYPE</th>
+                <th>LINE NAME</th>
+                <th>BUY</th>
+            </tr>
+        </table>
+    </div>
     <div class="admin" hidden>
         <hr/>
         VEHICLES:
@@ -61,6 +74,7 @@ user-scalable=no">
 <script>
     getUser();
     getVehicles();
+    getTicketTypes();
 
     function showQR(qrcode, title) {
         $('#qrcode').html('');
@@ -99,6 +113,23 @@ user-scalable=no">
                 html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.lastValidated}</td><td>${ticket.ticketType.name}</td><td><button onclick="showQR('${ticket.id}', '${ticket.ticketType.name}')">Show QR</button></td></tr>`;
             });
             $('#tickets tr').first().after(html);
+        });
+    }
+
+    function buyTicket(id) {
+        $.post('/api/tickets/buy/', {typeId: id}, function (ticket) {
+            getTickets($('#userId').html());
+        });
+    }
+
+    function getTicketTypes() {
+        $('#ticketTypes tr').not(':first').remove();
+        $.getJSON(`/api/tickets/`, function(tickets) {
+            let html = '';
+            tickets.forEach(ticket => {
+                html += `<tr><td>${ticket.typeId}</td><td>${ticket.name}</td><td>${ticket.type}</td><td>${ticket.line ? ticket.line.name : '-'}</td><td><button onclick="buyTicket('${ticket.id}')">BUY</button></td></tr>`;
+            });
+            $('#ticketTypes tr').first().after(html);
         });
     }
 
