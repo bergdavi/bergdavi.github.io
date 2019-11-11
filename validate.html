@@ -18,13 +18,20 @@ user-scalable=no">
     </style>
 </head>
 <body>
-<canvas id="canvas" hidden></canvas>
+<div id="canvasDiv">
+    <div id="canvasText"></div>
+    <canvas id="canvas"></canvas>
+</div>
 <div id="output" style="color: white" hidden>
 </div>
 <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const ticketId = urlParams.get('ticketId');
     const video = document.createElement("video");
     const canvasElement = document.getElementById("canvas");
     const canvas = canvasElement.getContext("2d");
+
+    $('#canvasText').html(ticketId);
 
     function drawLine(begin, end, color) {
         canvas.beginPath();
@@ -46,9 +53,9 @@ user-scalable=no">
     });
 
     function validateTicket(id) {
-        $.post('/api/tickets/validate/', {vehicleId: id}).then(function (result) {
+        $.post('/api/tickets/validate/', {vehicleId: id, ticketId: ticketId}).then(function (result) {
             console.log(result);
-            $('#canvas').hide();
+            $('#canvasDiv').hide();
             let outputDiv = $('#output');
             outputDiv.show();
             outputDiv.html(`${result.status}<br/>${result.ticket ? result.ticket.name : ''}`);

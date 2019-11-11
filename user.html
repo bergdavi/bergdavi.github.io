@@ -17,7 +17,7 @@ user-scalable=no">
     <div id="adminControls" class="admin" hidden>
         <button onclick="window.location.href='inspect'">Inspect</button>
     </div>
-    <div id="userControls" class="user" hidden>
+    <div id="userControls">
         <button onclick="window.location.href='validate'">Validate</button>
     </div>
     <div>
@@ -40,6 +40,7 @@ user-scalable=no">
                 <th>Last Validated</th>
                 <th>Type</th>
                 <th>QR</th>
+                <th>Validate</th>
             </tr>
         </table>
     </div>
@@ -110,7 +111,7 @@ user-scalable=no">
         $.getJSON(`/api/user/${id}/tickets/`, function(tickets) {
             let html = '';
             tickets.forEach(ticket => {
-                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.lastValidated}</td><td>${ticket.ticketType.name}</td><td><button onclick="showQR('${ticket.id}', '${ticket.ticketType.name}')">Show QR</button></td></tr>`;
+                html += `<tr><td>${ticket.id}</td><td>${ticket.validFrom}</td><td>${ticket.validUntil}</td><td>${ticket.lastValidated}</td><td>${ticket.ticketType.name}</td><td><button onclick="showQR('${ticket.id}', '${ticket.ticketType.name}')">Show QR</button></td><td><button onclick="window.location.href='validate?ticketId=${ticket.id}'">Validate</button></td></tr>`;
             });
             $('#tickets tr').first().after(html);
         });
