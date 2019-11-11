@@ -58,7 +58,7 @@ user-scalable=no">
             $('#canvasDiv').hide();
             let outputDiv = $('#output');
             outputDiv.show();
-            outputDiv.html(`${result.status}<br/>${result.ticket ? result.ticket.name : ''}`);
+            outputDiv.html(`${result.status}<br/>${result.ticket ? result.ticket.ticketType.name : ''}`);
             if(result.status === 'validated') {
                 outputDiv.css('background-color', 'green');
             } else {
