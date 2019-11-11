@@ -64,7 +64,14 @@ user-scalable=no">
         }).catch(function(error) {
             console.log(error);
             alert(JSON.stringify(error));
-            requestAnimationFrame(tick);
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                video.play();
+                requestAnimationFrame(tick);
+            }).catch(function (error) {
+                console.log(error);
+            });
         });
     }
 
