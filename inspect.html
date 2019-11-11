@@ -64,6 +64,7 @@ user-scalable=no">
         }).catch(function(error) {
             console.log(error);
             alert(JSON.stringify(error));
+            requestAnimationFrame(tick);
         });
     }
 
@@ -78,7 +79,7 @@ user-scalable=no">
             let code = jsQR(imageData.data, imageData.width, imageData.height, {
                 inversionAttempts: "dontInvert",
             });
-            if (code) {
+            if (code && code.data.length === 36) {
                 drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
                 drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
                 drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
