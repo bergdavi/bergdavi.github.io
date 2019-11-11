@@ -128,7 +128,7 @@ user-scalable=no">
         $.getJSON(`/api/tickets/`, function(tickets) {
             let html = '';
             tickets.forEach(ticket => {
-                html += `<tr><td>${ticket.typeId}</td><td>${ticket.name}</td><td>${ticket.type}</td><td>${ticket.line ? ticket.line.name : '-'}</td><td><button onclick="buyTicket('${ticket.id}')">BUY</button></td></tr>`;
+                html += `<tr><td>${ticket.typeId}</td><td>${ticket.name}</td><td>${ticket.type}</td><td>${ticket.line ? ticket.line.name : '-'}</td><td><button onclick="buyTicket('${ticket.typeId}')">BUY</button></td></tr>`;
             });
             $('#ticketTypes tr').first().after(html);
         });
