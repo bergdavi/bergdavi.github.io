@@ -19,8 +19,7 @@ user-scalable=no">
 </head>
 <body>
 <canvas id="canvas" hidden></canvas>
-<div id="output" hidden>
-
+<div id="output" style="color: white" hidden>
 </div>
 <script>
     const video = document.createElement("video");
@@ -58,7 +57,6 @@ user-scalable=no">
             } else {
                 outputDiv.css('background-color', 'red');
             }
-            outputDiv.html(result);
         }).catch(function(error) {
             console.log(error);
             alert(JSON.stringify(error));
