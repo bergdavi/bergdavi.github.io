@@ -139,7 +139,7 @@ user-scalable=no">
         $.getJSON(`/api/vehicles/`, function(vehicles) {
             let html = '';
             vehicles.forEach(vehicle => {
-                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="showQR('${vehicle.id}', '${vehicle.licencePlate}')">Show QR</button></td></tr>`;
+                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="showQR('${vehicle.validateId}', '${vehicle.licencePlate}')">Show QR</button></td></tr>`;
             });
             $('#vehicles tr').first().after(html);
         });
