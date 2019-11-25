@@ -58,7 +58,7 @@ user-scalable=no">
             $('#canvasDiv').hide();
             let outputDiv = $('#output');
             outputDiv.show();
-            outputDiv.html(`${result.ticket ? result.ticket.ticketType.name : ''}`);
+            outputDiv.html(`${result ? result.ticketType.name : ''}`);
             if(result) {
                 outputDiv.css('background-color', 'green');
             } else {

@@ -66,6 +66,7 @@ user-scalable=no">
                 <th>VALIDATE ID</th>
                 <th>TYPE</th>
                 <th>LICENCE PLATE</th>
+                <th>NEW QR</th>
                 <th>QR</th>
             </tr>
         </table>
@@ -84,6 +85,13 @@ user-scalable=no">
         $('#qrtext').html(title);
         new QRCode(document.getElementById('qrcode'), qrcode);
     }
+
+    function newQR(id) {
+        $.post(`/api/vehicle/${id}/newid`, function () {
+            getVehicles();
+        });
+    }
+
 
     function hideQR() {
         $('#details').show();
@@ -139,7 +147,7 @@ user-scalable=no">
         $.getJSON(`/api/vehicles/`, function(vehicles) {
             let html = '';
             vehicles.forEach(vehicle => {
-                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="showQR('${vehicle.validateId}', '${vehicle.licencePlate}')">Show QR</button></td></tr>`;
+                html += `<tr><td>${vehicle.id}</td><td>${vehicle.validateId}</td><td>${vehicle.type}</td><td>${vehicle.licencePlate}</td><td><button onclick="newQR('${vehicle.id}')">New QR</button></td><td><button onclick="showQR('${vehicle.validateId}', '${vehicle.licencePlate}')">Show QR</button></td></tr>`;
             });
             $('#vehicles tr').first().after(html);
         });
